@@ -1,0 +1,67 @@
+swagger: "2.0"
+info:
+  title: poc-beego-api
+  description: poc-beego-api
+  version: 1.0.0
+basePath: /v1
+paths:
+  /job/:
+    get:
+      tags:
+      - job
+      description: get all Jobs
+      operationId: JobController.GetAll
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.Job'
+    post:
+      tags:
+      - job
+      description: create job
+      operationId: JobController.CreateJob
+      parameters:
+      - in: body
+        name: body
+        description: body for job content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Job'
+      responses:
+        "200":
+          description: models.Job
+        "403":
+          description: body is empty
+  /job/{id}:
+    get:
+      tags:
+      - job
+      description: get Job by id
+      operationId: JobController.Get
+      parameters:
+      - in: path
+        name: id
+        description: The key for job
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          schema:
+            $ref: '#/definitions/models.Job'
+        "403":
+          description: :id not found
+definitions:
+  models.Job:
+    title: Job
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+tags:
+- name: job
+  description: |
+    JobController base struct for Beego
